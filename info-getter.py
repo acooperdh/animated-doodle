@@ -10,13 +10,14 @@ import requests
 import json
 from json import dumps 
 import time
-from questrade_api import Questrade
 # k5CqAUoCNO-nLKfNKpNZH2b1DAxLAo070
 # 024d75fff9ad6a41d6302af488fce6ca
 
 api_key = '024d75fff9ad6a41d6302af488fce6ca'
-
+url = 'https://financialmodelingprep.com/api/v3/profile/'
 def add_url_params(url, params):
+    url+=params['SYMBOL']
+    print(url)
     url = unquote(url)
     parsed_url = urlparse(url)
     get_args = parsed_url.query
@@ -40,15 +41,25 @@ def add_url_params(url, params):
 
     return new_url
 def get_stock_info(symbol, url):
-    params = { 'apikey': api_key}
+    params = { 'apikey': api_key, 'SYMBOL': symbol }
     url = add_url_params(url, params)
     response = requests.get(url)
     if response.status_code == 200:
         return response.json()
     else:
         return None
-url = 'https://financialmodelingprep.com/api/v3/profile/TSLA'
-print(get_stock_info("AAPL", url) )
+
+url = 'https://financialmodelingprep.com/api/v3/profile/'
+stock_sym = input("Enter a stock symbol: ")
+while stock_sym != 'exit':
+    stock_sym.upper()
+    stock_info = get_stock_info(stock_sym.upper(), url)
+    print(stock_info[0])
+    for key, value in stock_info[0].items():
+        key = key.upper()
+        print(key+": "+str(value)) 
+    stock_sym = input("Enter a stock symbol: ")
+
 
 
 r = requests.get('https://financialmodelingprep.com/api/v3/profile/AAPL?apikey=024d75fff9ad6a41d6302af488fce6ca')
