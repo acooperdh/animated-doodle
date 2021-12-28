@@ -2,6 +2,7 @@ import discord
 import asyncio
 import requests
 import youtube_dl
+import info_getter
 client = discord.Client()
 
 @client.event
@@ -17,7 +18,10 @@ async def on_message(message):
         await message.channel.send('Hello!')
     
 # voice channel commands for youtube bot 
-
+    elif message.content.startswith("$price"):
+        print(message.content)
+        list_of_coins = info_getter.list_of_cryptos()
+        print(len(list_of_coins))
     elif message.content.startswith('!play'):
         await message.channel.send('get lost nerdling !')
         print(message.author.voice)
@@ -27,5 +31,5 @@ async def on_message(message):
             await message.channel.send("You are not in a voice channel")
 
 
-client.run("OTEwMDE0OTQ3ODM5MzQwNjE0.YZMrdg.KIdXxml0AxqorHDmIgz5x6kYmhg")
+client.run("OTEwMDE0OTQ3ODM5MzQwNjE0.YZMrdg.fSkoUZKfwD0WtMKs19huG6-DNys")
 

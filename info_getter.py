@@ -49,13 +49,22 @@ def get_stock_info(symbol, url):
     else:
         return None
 
-url = 'https://financialmodelingprep.com/api/v3/profile/'
-stock_sym = input("Enter a stock symbol: ")
-while stock_sym != 'exit':
-    stock_sym.upper()
-    stock_info = get_stock_info(stock_sym.upper(), url)
-    # print(stock_info[0])
-    for key, value in stock_info[0].items():
-        key = key.upper()
-        print(key+": "+str(value)) 
+def run_info_getter():
+    url = 'https://financialmodelingprep.com/api/v3/profile/'
     stock_sym = input("Enter a stock symbol: ")
+    while stock_sym != 'exit':
+        stock_sym.upper()
+        stock_info = get_stock_info(stock_sym.upper(), url)
+        # print(stock_info[0])
+        for key, value in stock_info[0].items():
+            key = key.upper()
+            print(key+": "+str(value)) 
+        stock_sym = input("Enter a stock symbol: ")
+# this functions uses the coingecko api to get the list of coins and their prices
+def list_of_cryptos():
+    url = 'https://api.coingecko.com/api/v3/coins/list'
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        return None
